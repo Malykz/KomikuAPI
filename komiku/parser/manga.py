@@ -10,7 +10,7 @@ class MangaParser(KomikuParser) :
         self.page = self.render_page(self.url)
 
     @property
-    def chapters_url(self) -> None:
+    def chapters_url(self) -> dict:
         result = {}
         for el in self.page.css("table#Daftar_Chapter tbody tr td a") :
             print(el.css("a::attr(href)").get())
@@ -20,7 +20,7 @@ class MangaParser(KomikuParser) :
         return result            
     
     @property
-    def result(self) :
+    def result(self) -> dict :
         raw_data = self.page.css("table.inftable tr td::text")
         result = {
             "title" : raw_data[1].get(),
