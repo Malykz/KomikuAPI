@@ -1,6 +1,6 @@
 from .KomikuParser import KomikuParser
 from urllib.parse import urlparse
-
+import httpx
 class SearchPageParser(KomikuParser) :
     _order_by = {
         "rank" : "meta_value_num",
@@ -13,10 +13,17 @@ class SearchPageParser(KomikuParser) :
     def __init__(self, judul = None):
         self.judul = judul
         self.url = f"https://api.komiku.id/?post_type=manga&s={self.judul}"
-        self.page = self.render_page(self.url)
+        self.is_async = False
+
+    async def asyn(self, client: httpx.AsyncClient) :
+        self.page = await self.as_render_page(self.url, client=client)
+        self.is_async = True
+        return self
 
     @property
     def result(self) :
+        if self.is_async != True : self.page = self.render_page(self.url)
+
         data = self.page.css("div.bge")
         result = [{} for i in data]
 
@@ -47,7 +54,8 @@ class SearchPageParser(KomikuParser) :
         i = 0
         for raw_data in data :
             img = raw_data.css("a img::attr(src)").get()
-            result[i]["img"] = img[: img.index("?")]
+            result[i]["thumbnail"] = img[: img.index("?")]
+            result[i]["poster"] = img[: img.index("?")].replace("A1", "A2")
             result[i]["url"] = raw_data.css("a::attr(href)").get()
             result[i]["slug"] = self.get_slug(raw_data.css("a::attr(href)").get())
             result[i]["title"] = raw_data.css("div.kan a h3::text").get().strip()
