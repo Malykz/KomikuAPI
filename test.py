@@ -4,8 +4,8 @@ from fastapi import FastAPI
 app = FastAPI()
 
 @app.get("/search")
-def read_root(search:str):
-    return komiku.Search(search).result
+def read_root(q:str):
+    return komiku.Search(q).result
 
 @app.get("/manga/{slug}")
 def read_root(slug:str):
