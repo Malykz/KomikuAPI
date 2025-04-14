@@ -8,13 +8,19 @@ class KomikuParser :
         "user-agent" : "Mozilla"
     }
 
+    async def asyn(self, client: httpx.AsyncClient) :
+        self.page = await self.as_render_page(self.url, client=client)
+        self.is_async = True
+        return self
+
     def route_to_url(self, route:str, slash=False) -> str :
         if slash :
             return "https://" + self.host + "/" + route
         return "https://" + self.host + route
 
     def render_page(self, url:str) -> Selector:
-        page, code = self._send_request(url,)
+        page, code = self._send_request(url)
+        print(code)
         sel = Selector(
             page if code == 200 else self.end(code)
         )

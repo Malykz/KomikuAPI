@@ -15,11 +15,6 @@ class SearchPageParser(KomikuParser) :
         self.url = f"https://api.komiku.id/?post_type=manga&s={self.judul}"
         self.is_async = False
 
-    async def asyn(self, client: httpx.AsyncClient) :
-        self.page = await self.as_render_page(self.url, client=client)
-        self.is_async = True
-        return self
-
     @property
     def result(self) :
         if self.is_async != True : self.page = self.render_page(self.url)
