@@ -8,6 +8,9 @@ class MangaParser(KomikuParser) :
         self.url = f"https://{self.host}/manga/{slug}"
         self.page = self.render_page(self.url)
 
+    def end(self, code) :
+        raise Exception(f"Error rendering with Httpcode : {code}")
+
     @property
     def chapters_url(self) -> dict:
         result = []

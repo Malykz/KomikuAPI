@@ -19,27 +19,20 @@ class KomikuParser :
         return "https://" + self.host + route
 
     def render_page(self, url:str) -> Selector:
-        page, code = self._send_request(url)
-        print(code)
-        sel = Selector(
-            page if code == 200 else self.end(code)
+        page = requests.get(url, headers=self.headers)
+        return Selector(
+            page.text if page.status_code == 200 else self.end(page.status_code)
         )
-        return sel
 
     def _send_request(self, url) :
         page = requests.get(url, headers=self.headers)
         return page.text, page.status_code
 
     async def as_render_page(self, url:str, client: httpx.AsyncClient) -> Selector:
-        page, code = await self._as_send_request(url, client=client)
-        sel = Selector(
-            page if code == 200 else self.end(code)
+        page = await client.get(url, headers=self.headers, follow_redirects=True)
+        return Selector(
+            page.text if page.status_code == 200 else self.end(page.status_code)
         )
-        return sel
-
-    async def _as_send_request(self, url, client) :
-        page = await client.get(url, headers=self.headers)
-        return page.text, page.status_code
 
     def sort_it(self, sentance) :
         print(sentance)
