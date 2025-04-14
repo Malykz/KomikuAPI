@@ -4,10 +4,10 @@ import json
 class ChapterParser(KomikuParser) :
     def __init__(
         self,
-        url,
+        slug,
     ) :
-        self.url = url
-        self.page = self.render_page(url)
+        self.url = "https://" + self.host + "/" + slug
+        self.page = self.render_page(self.url)
 
     def end(self, code) : 
         raise Exception(f"Failed to send request, Http Code : {code}")

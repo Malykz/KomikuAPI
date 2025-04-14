@@ -1,2 +1,5 @@
 komiku-wsl
 __pycache__
+test
+test1.py
+*.pyd

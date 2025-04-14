@@ -21,7 +21,6 @@ class KomikuParser :
         return "https://" + self.host + route
 
     def _send_request(self, url) :
-        print("Bruh. You Fucking Idiot")
         page = requests.get(url, headers=self.headers)
         return page.text, page.status_code
 
@@ -31,4 +30,7 @@ class KomikuParser :
         except : return sentance
     
     def get_slug(self, url) :
-        return url.replace("/manga/", "").replace("/","")
+        if "/manga/" in url :
+            return url[ url.index("/manga/") + 7 : ].replace("/","")
+        else :
+            return url.replace("/","")
