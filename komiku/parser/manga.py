@@ -30,7 +30,7 @@ class MangaParser(KomikuParser) :
         result = {
             "title" : raw_data[1].get(),
             "judul" : raw_data[3].get(),
-            "poster" : poster[ poster.index("?") ],
+            "poster" : poster[ : poster.index("?") ],
             "author" : raw_data[8].get(),
             "totalChapters" : len(self.chapters_url),
             "chapters" : self.chapters_url
