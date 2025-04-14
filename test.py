@@ -3,7 +3,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/search/{search}")
+@app.get("/search")
 def read_root(search:str):
     return komiku.Search(search).result
 
