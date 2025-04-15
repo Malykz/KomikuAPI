@@ -16,7 +16,6 @@ class MangaParser(KomikuParser) :
     def chapters_url(self) -> dict:
         result = []
         for el in self.page.css("table#Daftar_Chapter tbody tr td a") :
-            print(el.css("a::attr(href)").get())
             result.append(
                 {
                     "chapter" : el.css("a span::text").get(),

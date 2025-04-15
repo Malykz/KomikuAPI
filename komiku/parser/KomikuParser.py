@@ -24,6 +24,7 @@ class KomikuParser :
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
 
+    # Deprecated
     def _send_request(self, url) :
         page = requests.get(url, headers=self.headers)
         return page.text, page.status_code
@@ -33,14 +34,15 @@ class KomikuParser :
         return Selector(
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
-
+    
+    # Deprecated
     def sort_it(self, sentance) :
-        print(sentance)
         try : return [int(word) for word in sentance.split(" ") if word.isdigit()][0]
         except : return sentance
     
     def get_slug(self, url) :
-        if "/manga/" in url :
-            return url[ url.index("/manga/") + 7 : ].replace("/","")
+        if "/manga/" in url : 
+            slug = url[ url.index("/manga/") + 7 : ]
         else :
-            return url.replace("/","")
+            slug = url
+        return slug.replace("/","")
