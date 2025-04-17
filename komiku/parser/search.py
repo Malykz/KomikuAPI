@@ -13,7 +13,6 @@ class SearchPageParser(KomikuParser) :
     def __init__(self, judul = None):
         self.judul = judul
         self.url = f"https://api.komiku.id/?post_type=manga&s={self.judul}"
-        self.is_async = False
 
     @property
     def result(self) :

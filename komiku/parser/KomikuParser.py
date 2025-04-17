@@ -7,6 +7,7 @@ class KomikuParser :
     headers = {
         "user-agent" : "Mozilla"
     }
+    is_async = False
 
     async def asyn(self, client: httpx.AsyncClient) :
         self.page = await self.as_render_page(self.url, client=client)
