@@ -1,6 +1,7 @@
 from parsel import Selector
 import requests
 import httpx
+import asyncio
 class KomikuParser :
     host = "komiku.id"
     userAgent = "Mozilla"
@@ -24,6 +25,19 @@ class KomikuParser :
         return Selector(
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
+
+    async def _set_asyn_result(self) :
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, self._set_result)
+
+    @property
+    def result(self) :
+        self.t_result = {
+            False : self._set_result,
+            True : self._set_asyn_result
+        }.get(self.is_async)
+        
+        return self.t_result()
 
     # Deprecated
     def _send_request(self, url) :

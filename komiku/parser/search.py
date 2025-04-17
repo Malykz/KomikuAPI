@@ -1,6 +1,6 @@
 from .KomikuParser import KomikuParser
-from urllib.parse import urlparse
-import httpx
+import asyncio
+import time
 class SearchPageParser(KomikuParser) :
     _order_by = {
         "rank" : "meta_value_num",
@@ -8,14 +8,11 @@ class SearchPageParser(KomikuParser) :
         "rand" : "rand"
     }
     _order_type = ["manga", "manhua", "manhwa"]
-
-    
     def __init__(self, judul = None):
         self.judul = judul
         self.url = f"https://api.komiku.id/?post_type=manga&s={self.judul}"
 
-    @property
-    def result(self) :
+    def _set_result(self) :
         if self.is_async != True : self.page = self.render_page(self.url)
 
         data = self.page.css("div.bge")
@@ -34,7 +31,7 @@ class SearchPageParser(KomikuParser) :
             i += 1
 
         return result
-    
+        
     def top(self, orderby, type) :
         if self.is_async != True : self.page = self.render_page(self.url)
         if orderby not in self._order_by.keys() : raise Exception("Invalid Sort")

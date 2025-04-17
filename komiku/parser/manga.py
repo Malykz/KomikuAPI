@@ -25,8 +25,7 @@ class MangaParser(KomikuParser) :
             )
         return result            
     
-    @property
-    def result(self) -> dict :
+    def _set_result(self) -> dict :
         if self.is_async is not True : self.page = self.render_page(self.url)
         raw_data = self.page.css("table.inftable tr td::text")
         poster = self.page.css("section#Informasi div.ims img::attr(src)").get()
