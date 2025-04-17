@@ -22,12 +22,12 @@ VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'fastapi', 'httpx', 'requests', 'parsel', 'typing-extensions>=4.12.2', 'pydantic>=2.0'
+    'httpx', 'requests', 'parsel', 'typing-extensions>=4.12.2', 'pydantic>=2.0'
 ]
 
 # What packages are optional?
 EXTRAS = {
-    # 'fancy feature': ['django'],
+    'fancy feature': ['fastapi'],
 }
 
 # The rest you shouldn't have to touch too much :)
