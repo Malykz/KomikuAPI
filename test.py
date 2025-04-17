@@ -19,17 +19,24 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/search")
 async def read_root(q:str, request: Request):
-    asd = await komiku.Search(q).asyn(request.state.http_client)
-    return asd.result
+    result = await komiku.Search(q).asyn(request.state.http_client)
+    respon = await result.result
+    
+    return respon
 
 @app.get("/manga/{slug}")
 async def read_root(slug:str, request: Request):
-    asd = await komiku.Manga(slug).asyn(request.state.http_client)
-    return asd.result
+    result = await komiku.Manga(slug).asyn(request.state.http_client)
+    respon = await result.result
+
+    return respon
 
 @app.get("/chapter/{slug}")
-def get_chapter(slug:str):
-    return komiku.Chapter(slug).result
+async def get_chapter(slug:str, request: Request):
+    result = await komiku.Chapter(slug).asyn(request.state.http_client)
+    respon = await result.result
+    
+    return respon
 
 @app.get("/top/")
 def re(type:str = "manga", sort:str = "new"):
