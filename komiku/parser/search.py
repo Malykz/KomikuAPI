@@ -1,6 +1,4 @@
 from .KomikuParser import KomikuParser
-import asyncio
-import time
 class SearchPageParser(KomikuParser) :
     _order_by = {
         "rank" : "meta_value_num",

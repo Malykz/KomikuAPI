@@ -39,21 +39,11 @@ class KomikuParser :
         
         return self.t_result()
 
-    # Deprecated
-    def _send_request(self, url) :
-        page = requests.get(url, headers=self.headers)
-        return page.text, page.status_code
-
     async def as_render_page(self, url:str, client: httpx.AsyncClient) -> Selector:
         page = await client.get(url, headers=self.headers, follow_redirects=True)
         return Selector(
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
-    
-    # Deprecated
-    def sort_it(self, sentance) :
-        try : return [int(word) for word in sentance.split(" ") if word.isdigit()][0]
-        except : return sentance
     
     def get_slug(self, url) :
         if "/manga/" in url : 
