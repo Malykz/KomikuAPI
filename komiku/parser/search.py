@@ -32,6 +32,7 @@ class SearchPageParser(KomikuParser) :
         
     def top(self, orderby, type) :
         if self.is_async != True : self.page = self.render_page(self.url)
+        
         if orderby not in self._order_by.keys() : raise Exception("Invalid Sort")
         if type not in self._order_type : raise Exception("Invalid Type")
 

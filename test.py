@@ -1,6 +1,5 @@
 import komiku
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from typing import TypedDict, AsyncIterator
 from starlette.applications import Starlette
 from starlette.requests import Request

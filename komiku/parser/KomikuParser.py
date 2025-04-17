@@ -22,6 +22,7 @@ class KomikuParser :
 
     def render_page(self, url:str) -> Selector:
         page = requests.get(url, headers=self.headers)
+        self.response = page.status_code
         return Selector(
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
@@ -41,6 +42,7 @@ class KomikuParser :
 
     async def as_render_page(self, url:str, client: httpx.AsyncClient) -> Selector:
         page = await client.get(url, headers=self.headers, follow_redirects=True)
+        self.response = page.status_code
         return Selector(
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
