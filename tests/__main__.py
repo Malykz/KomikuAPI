@@ -4,13 +4,20 @@ import komiku
 
 class TestMangaKomiku(unittest.TestCase) :
     def setUp(self) :
-        self.ruri = komiku.Manga("ruri-dragon")
+        self.ruri = komiku.Manga("ruri-dragon").syn()
+        self.gaga = komiku.Manga("ruri-s").syn()
+
+    def test_gaga(self) :
+        data = self.gaga
+
+        self.assertIsNone(data.result)
+        self.assertFalse(data.is_success)
+        self.assertEqual(data.code, 404)
 
     def test_request(self) :
         data = self.ruri
 
-        self.assertEqual(data.is_async, False)
-        self.assertEqual(data.response, 200)
+        self.assertTrue(data.is_success)
         self.assertIsNotNone(data.headers)
     
     def test_parser(self) :
@@ -35,14 +42,7 @@ class TestMangaKomiku(unittest.TestCase) :
 
 class TestChapterKomiku(unittest.TestCase) :
     def setUp(self) :
-        self.ruri = komiku.Chapter("ruri-dragon-chapter-31")
-
-    def test_request(self) :
-        data = self.ruri
-
-        self.assertEqual(data.is_async, False)
-        self.assertEqual(data.response, 200)
-        self.assertIsNotNone(data.headers)
+        self.ruri = komiku.Chapter("ruri-dragon-chapter-31").syn()
     
     def test_parser(self) :
         page = self.ruri.page

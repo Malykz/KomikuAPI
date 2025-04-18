@@ -6,13 +6,17 @@ class SearchPageParser(KomikuParser) :
         "rand" : "rand",
     }
     _order_type = ["manga", "manhua", "manhwa"]
+    
     def __init__(self, judul = None):
         self.judul = judul
         self.url = f"https://api.komiku.id/?post_type=manga&s={self.judul}"
 
-    def _set_result(self) :
-        if self.is_async != True :
+    def __validation(self) -> None :
+        if self._is_async is not True :
             self.page = self.render_page(self.url)
+
+    def _set_result(self) -> dict :
+        if self.page == None : return None  
 
         data = self.page.css("div.bge")
         result = [{} for i in data]
@@ -32,7 +36,7 @@ class SearchPageParser(KomikuParser) :
         return result
         
     def top(self, orderby, type) :
-        if self.is_async != True :
+        if self._is_async != True :
             self.page = self.render_page(self.url)
 
         base_url = f"https://api.komiku.id/other/hot/?orderby={orderby}&category_name={type}"

@@ -12,9 +12,12 @@ class ChapterParser(KomikuParser) :
     def end(self, code) : 
         raise Exception(f"Failed to send request, Http Code : {code}")
     
-    def _set_result(self) :
-        if self.is_async is not True :
+    def __validation(self) -> None :
+        if self._is_async is not True :
             self.page = self.render_page(self.url)
+
+    def _set_result(self) -> dict :
+        if self.page == None : return None  
         
         result = {}
         addictional_data = json.loads(self.page.css('script[type="application/ld+json"]::text')[1].get().strip())
