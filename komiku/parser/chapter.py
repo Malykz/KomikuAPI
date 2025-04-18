@@ -20,8 +20,8 @@ class ChapterParser(KomikuParser) :
         addictional_data = json.loads(self.page.css('script[type="application/ld+json"]::text')[1].get().strip())
         result.update(addictional_data)
         
-        result["totalPage"] = self.page.css("span.chapterInfo::attr(valuechapter)").get().replace(" ", "-")
-        result["pagesUrl"] = [mangaImageUrl for mangaImageUrl in self.page.css("div#Baca_Komik img::attr(src)").getall()]
-        result["slug"] = self.page.css("span.chapterInfo::attr(valuelink)").get().replace("/","")
+        result["chapter"]   = self.page.css("span.chapterInfo::attr(valuechapter)").get().replace(" ", "-")
+        result["pagesUrl"]  = [mangaImageUrl for mangaImageUrl in self.page.css("div#Baca_Komik img::attr(src)").getall()]
+        result["slug"]      = self.page.css("span.chapterInfo::attr(valuelink)").get().replace("/","")
         
         return result
