@@ -3,7 +3,7 @@ class SearchPageParser(KomikuParser) :
     _order_by = {
         "rank" : "meta_value_num",
         "new" : "date",
-        "rand" : "rand"
+        "rand" : "rand",
     }
     _order_type = ["manga", "manhua", "manhwa"]
     def __init__(self, judul = None):
@@ -31,10 +31,8 @@ class SearchPageParser(KomikuParser) :
         return result
         
     def top(self, orderby, type) :
-        if self.is_async != True : self.page = self.render_page(self.url)
-        
-        if orderby not in self._order_by.keys() : raise Exception("Invalid Sort")
-        if type not in self._order_type : raise Exception("Invalid Type")
+        if self.is_async != True :
+            self.page = self.render_page(self.url)
 
         base_url = f"https://api.komiku.id/other/hot/?orderby={orderby}&category_name={type}"
         page = self.render_page(base_url)

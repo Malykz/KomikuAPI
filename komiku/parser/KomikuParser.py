@@ -2,12 +2,11 @@ from parsel import Selector
 import requests
 import httpx
 import asyncio
+from user_agent import generate_navigator
 class KomikuParser :
     host = "komiku.id"
     userAgent = "Mozilla"
-    headers = {
-        "user-agent" : "Mozilla"
-    }
+    headers = generate_navigator()
     is_async = False
 
     async def asyn(self, client: httpx.AsyncClient) :
@@ -15,10 +14,10 @@ class KomikuParser :
         self.is_async = True
         return self
 
-    def route_to_url(self, route:str, slash=False) -> str :
-        if slash :
-            return "https://" + self.host + "/" + route
-        return "https://" + self.host + route
+    def route_to_url(self, route: str, slash: bool = False) -> str:
+        separator = "/" if slash else ""
+        return f"https://{self.host}{separator}{route}"
+
 
     def render_page(self, url:str) -> Selector:
         page = requests.get(url, headers=self.headers)
@@ -47,9 +46,7 @@ class KomikuParser :
             page.text if page.status_code == 200 else self.end(page.status_code)
         )
     
-    def get_slug(self, url) :
-        if "/manga/" in url : 
-            slug = url[ url.index("/manga/") + 7 : ]
-        else :
-            slug = url
-        return slug.replace("/","")
+    def get_slug(self, url: str) -> str:
+        prefix = "/manga/"
+        slug = url.split(prefix, 1)[-1] if prefix in url else url
+        return slug.replace("/", "")

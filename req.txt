@@ -4,3 +4,4 @@ requests
 parsel
 typing-extensions>=4.12.2
 pydantic>=2.0
+user_agent
