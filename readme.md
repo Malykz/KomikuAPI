@@ -12,7 +12,7 @@ pip install git+https://github.com/Malykz/KomikuAPI
 ```python
 import komiku
 
-resp = komiku.Manga("ruri-dragon") # Send Request
+resp = komiku.Manga("ruri-dragon").syn() # Send Request
 ruri = resp.result # Parse the Response
 ruri["title"] # "Ruri Dragon"
 ```
@@ -67,7 +67,7 @@ The class that handles parsing responses for all `/manga/` endpoints. Requires s
 
 <b>Ex : Embed</b>
 ```python
-ruri: dict = komiku.Manga("ruri-dragon").result
+ruri: dict = komiku.Manga("ruri-dragon").syn().result
 ```
 <b>Ex : Rest API</b>
 ```bash
@@ -105,7 +105,7 @@ The class that handles parsing responses for all `/chapter/` endpoints. Requires
 
 <b>Ex : Embed</b>
 ```python
-ruri: dict = komiku.Search("ruri-dragon-chapter-32-2").result
+ruri: dict = komiku.Search("ruri-dragon-chapter-32-2").syn().result
 ```
 <b>Ex : Rest API</b>
 ```bash
@@ -136,7 +136,7 @@ The class that handles parsing responses for all `/top/` and `/search/` endpoint
 
 <br><b>Ex : Embed</b>
 ```python
-ruri: list[dict] = komiku.Search("ruri").result
+ruri: list[dict] = komiku.Search("ruri").syn().result
 ```
 <b>Ex : Rest API</b>
 ```python
@@ -162,7 +162,7 @@ curl -X GET http://localhost:8000/search?q=ruri
 
 <br><b>Ex : Embed</b>
 ```python
-ruri: list[dict] = komiku.Search("ruri").top("new", "manhua")
+ruri: list[dict] = komiku.Search("ruri").syn().top("new", "manhua")
 ```
 <b>Ex : Rest API</b>
 ```python
