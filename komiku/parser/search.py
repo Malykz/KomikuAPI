@@ -25,7 +25,7 @@ class SearchPageParser(KomikuParser) :
         for raw_data in data :
             img = raw_data.css("a img::attr(src)").get()
             result[i]["img"]    = img[: img.index("?")]
-            result[i]["url"]    = f"https://{self.host}{raw_data.css("a::attr(href)").get()}"
+            result[i]["url"]    = f"https://{self.host}{raw_data.css('a::attr(href)').get()}"
             result[i]["slug"]   = self.get_slug(raw_data.css("a::attr(href)").get())
             result[i]["title"]  = raw_data.css("div.kan a h3::text").get().strip()
             result[i]["judul"]  = raw_data.css("span.judul2::text").get()

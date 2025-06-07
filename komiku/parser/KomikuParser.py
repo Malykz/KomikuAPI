@@ -6,7 +6,7 @@ from user_agent import generate_navigator
 from komiku.exception import *
 
 class KomikuParser :
-    host = "komiku.id"
+    host = "komiku.org"
     userAgent = "Mozilla"
     headers = generate_navigator()
     timeout = 5
